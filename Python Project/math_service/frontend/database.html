@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Istoric Operații - Math Service</title>
+  <link rel="stylesheet" href="/frontend/style.css">
+</head>
+<body>
+  <div class="container" style="max-width: 1200px;">
+    <h1>📊 Istoric Operații</h1>
+
+    <div class="section">
+      <button class="secondary" onclick="window.location.href='/'">
+        ⬅️ Înapoi la Calculator
+      </button>
+
+      <div class="filters">
+        <label for="filter">🔍 Filtru după operație:</label>
+        <input id="filter" type="text" placeholder="pow, factorial, fibonacci sau lasă gol pentru toate" oninput="renderFiltered()">
+
+        <label for="uniqueToggle" style="margin-left: 20px;">📋 Mod afișare:</label>
+        <select id="uniqueToggle" onchange="loadHistory()">
+          <option value="true">✨ Doar rezultate unice</option>
+          <option value="false">📚 Istoric complet (cu duplicate)</option>
+        </select>
+
+        <button onclick="exportData()">⬇️ Exportă JSON</button>
+        <button onclick="exportCSV()">📄 Exportă CSV</button>
+        <button onclick="showStats()" class="secondary">📊 Statistici</button>
+        <button onclick="clearCache()" class="secondary">🧹 Curăță Cache</button>
+        <button onclick="clearDisplay()" class="secondary">🗑️ Curăță Afișarea</button>
+        <button onclick="loadHistory()">🔄 Reîncarcă</button>
+      </div>
+
+      <div style="text-align: center; margin: 20px 0;">
+        <span id="loadingIndicator" style="display: none;">
+          <span class="loading"></span> Se încarcă datele...
+        </span>
+      </div>
+
+      <h2>💾 Rezultate Salvate (<span id="resultCount">0</span>)</h2>
+
+      <div id="tableContainer">
+        <p id="noDataMessage">Apasă "🔄 Reîncarcă" pentru a vedea istoricul...</p>
+
+        <table id="dataTable" style="display: none;">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>📅 Data & Ora</th>
+              <th>🔧 Operație</th>
+              <th>📥 Input</th>
+              <th>📤 Rezultat</th>
+              <th>⚡ Acțiuni</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let allData = [];
+    let filteredData = [];
+
+    async function loadHistory() {
+      const loading = document.getElementById("loadingIndicator");
+      const countSpan = document.getElementById("resultCount");
+      const noDataMessage = document.getElementById("noDataMessage");
+      const uniqueToggle = document.getElementById("uniqueToggle");
+      const isUnique = uniqueToggle.value === 'true';
+
+      loading.style.display = "block";
+      noDataMessage.textContent = "🔄 Se încarcă datele din baza de date...";
+      hideTable();
+
+      try {
+        const url = isUnique ? "/api/requests?unique=true" : "/api/requests?unique=false";
+        const res = await fetch(url);
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+
+        const result = await res.json();
+        console.log('Received result:', result); // DEBUG
+
+        // Extract data from the response structure
+        allData = result.data || [];
+        countSpan.textContent = result.count || allData.length;
+
+        if (allData.length === 0) {
+          noDataMessage.textContent = "📭 Nu există încă operații salvate în baza de date.\n\n💡 Mergi la calculator și efectuează câteva operații pentru a vedea rezultatele aici!";
+          hideTable();
+        } else {
+          renderFiltered();
+        }
+
+      } catch (err) {
+        console.error('Error loading data:', err); // DEBUG
+        noDataMessage.textContent = `❌ Eroare la încărcarea bazei de date!\n\n🔗 Detalii: ${err.message}\n\n💡 Verifică dacă serverul rulează corect.`;
+        countSpan.textContent = "0";
+        hideTable();
+
+        // Highlight error
+        noDataMessage.style.border = '2px solid #dc2626';
+        noDataMessage.style.padding = '20px';
+        noDataMessage.style.borderRadius = '12px';
+        noDataMessage.style.background = '#fee2e2';
+        setTimeout(() => {
+          noDataMessage.style.border = 'none';
+          noDataMessage.style.background = 'transparent';
+          noDataMessage.style.padding = '0';
+        }, 3000);
+      } finally {
+        loading.style.display = "none";
+      }
+    }
+
+    function renderFiltered() {
+      const filter = document.getElementById("filter").value.trim().toLowerCase();
+      const noDataMessage = document.getElementById("noDataMessage");
+
+      if (allData.length === 0) {
+        noDataMessage.textContent = "📭 Nu există date salvate în baza de date.";
+        hideTable();
+        return;
+      }
+
+      filteredData = allData
+        .filter(entry => {
+          if (!entry.operation) return false;
+          return filter === '' || entry.operation.toLowerCase().includes(filter);
+        })
+        .sort((a, b) => {
+          // Sortare după timestamp descrescător (cel mai recent primul)
+          const dateA = new Date(a.timestamp || 0);
+          const dateB = new Date(b.timestamp || 0);
+          return dateB - dateA;
+        });
+
+      if (filteredData.length === 0) {
+        noDataMessage.textContent = `🔍 Nu s-au găsit rezultate pentru filtrul: "${filter}"\n\n💡 Încearcă să ștergi filtrul sau să folosești: pow, factorial, fibonacci`;
+        hideTable();
+        return;
+      }
+
+      // Afișează tabelul și populează datele
+      showTable();
+      populateTable();
+    }
+
+    function populateTable() {
+      const tbody = document.getElementById("tableBody");
+      tbody.innerHTML = '';
+
+      filteredData.forEach((entry, index) => {
+        console.log('Processing entry:', entry); // DEBUG
+
+        const row = document.createElement('tr');
+
+        // Numărul rândului
+        const numberCell = document.createElement('td');
+        numberCell.textContent = index + 1;
+        numberCell.className = 'row-number';
+
+        // Data și ora
+        const dateCell = document.createElement('td');
+        const date = new Date(entry.timestamp || 0);
+        dateCell.innerHTML = `
+          <div class="date-cell">
+            <div class="date">${date.toLocaleDateString('ro-RO')}</div>
+            <div class="time">${date.toLocaleTimeString('ro-RO')}</div>
+          </div>
+        `;
+
+        // Operația
+        const operationCell = document.createElement('td');
+        operationCell.innerHTML = `
+          <span class="operation-badge operation-${entry.operation}">
+            ${getOperationIcon(entry.operation)} ${entry.operation?.toUpperCase() || 'N/A'}
+          </span>
+        `;
+
+        // Input-ul
+        const inputCell = document.createElement('td');
+        inputCell.textContent = formatInput(entry.input, entry.operation);
+        inputCell.className = 'input-cell';
+
+        // Rezultatul - Corectare: folosește entry.result
+        const resultCell = document.createElement('td');
+        resultCell.textContent = formatOutput(entry.result, entry.operation);
+        resultCell.className = 'result-cell';
+
+        // Acțiuni
+        const actionsCell = document.createElement('td');
+        actionsCell.innerHTML = `
+          <div class="actions">
+            <button class="action-btn" onclick="copyToClipboard('${escapeHtml(formatOutput(entry.result, entry.operation))}')">📋</button>
+            <button class="action-btn" onclick="showDetails(${index})">👁️</button>
+          </div>
+        `;
+
+        row.appendChild(numberCell);
+        row.appendChild(dateCell);
+        row.appendChild(operationCell);
+        row.appendChild(inputCell);
+        row.appendChild(resultCell);
+        row.appendChild(actionsCell);
+
+        tbody.appendChild(row);
+      });
+    }
+
+    function showTable() {
+      document.getElementById("noDataMessage").style.display = "none";
+      document.getElementById("dataTable").style.display = "table";
+    }
+
+    function hideTable() {
+      document.getElementById("noDataMessage").style.display = "block";
+      document.getElementById("dataTable").style.display = "none";
+    }
+
+    function getOperationIcon(operation) {
+      switch(operation) {
+        case 'pow': return '⚡';
+        case 'factorial': return '🔢';
+        case 'fibonacci': return '🌀';
+        default: return '🔧';
+      }
+    }
+
+    function formatInput(inputData, operation) {
+      try {
+        // inputData poate fi deja un obiect sau un string JSON
+        const parsed = typeof inputData === 'string' ? JSON.parse(inputData) : inputData;
+
+        switch(operation) {
+          case 'pow':
+            return `${parsed.x}^${parsed.y}`;
+          case 'factorial':
+            return `${parsed.n}!`;
+          case 'fibonacci':
+            return `fibonacci(${parsed.n})`;
+          default:
+            return JSON.stringify(parsed);
+        }
+      } catch (e) {
+        console.error('Error formatting input:', e, inputData);
+        return typeof inputData === 'string' ? inputData : JSON.stringify(inputData) || 'N/A';
+      }
+    }
+
+    function formatOutput(resultData, operation) {
+      try {
+        // Dacă resultData este deja un număr sau string simplu
+        if (typeof resultData === 'number' || typeof resultData === 'string') {
+          return resultData.toString();
+        }
+
+        // Dacă este un obiect, încearcă să parseziești
+        const parsed = typeof resultData === 'string' ? JSON.parse(resultData) : resultData;
+
+        // Dacă parsed are proprietatea result, folosește-o
+        if (parsed && typeof parsed.result !== 'undefined') {
+          return parsed.result.toString();
+        }
+
+        // Altfel, încearcă să returnezi parsed direct
+        return parsed?.toString() || 'N/A';
+      } catch (e) {
+        console.error('Error formatting output:', e, resultData);
+        return typeof resultData === 'string' ? resultData : JSON.stringify(resultData) || 'N/A';
+      }
+    }
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        showNotification('📋 Copiat în clipboard!');
+      }).catch(() => {
+        showNotification('❌ Nu s-a putut copia');
+      });
+    }
+
+    function showDetails(index) {
+      const entry = filteredData[index];
+      const details = `
+📊 DETALII OPERAȚIE #${index + 1}
+═══════════════════════════════════════
+🔧 Operație: ${entry.operation}
+📅 Data: ${new Date(entry.timestamp).toLocaleString('ro-RO')}
+📥 Input complet: ${typeof entry.input === 'string' ? entry.input : JSON.stringify(entry.input)}
+📤 Output complet: ${typeof entry.result === 'string' ? entry.result : JSON.stringify(entry.result)}
+      `;
+      alert(details);
+    }
+
+    function showNotification(message) {
+      const notification = document.createElement('div');
+      notification.className = 'notification';
+      notification.textContent = message;
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #059669;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 1000;
+        animation: slideIn 0.3s ease-out;
+      `;
+      document.body.appendChild(notification);
+
+      setTimeout(() => {
+        notification.remove();
+      }, 3000);
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML.replace(/'/g, '&apos;');
+    }
+
+    function exportData() {
+      if (filteredData.length === 0) {
+        alert("📭 Nu există date pentru export!\n\n💡 Efectuează câteva operații mai întâi.");
+        return;
+      }
+
+      const exportData = {
+        metadata: {
+          exportDate: new Date().toISOString(),
+          totalRecords: filteredData.length,
+          filter: document.getElementById("filter").value || 'none'
+        },
+        operations: filteredData
+      };
+
+      const dataStr = JSON.stringify(exportData, null, 2);
+      const blob = new Blob([dataStr], { type: 'application/json' });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `math_service_export_${new Date().toISOString().split('T')[0]}.json`;
+      link.click();
+      URL.revokeObjectURL(link.href);
+
+      showNotification('✅ Date exportate în JSON!');
+    }
+
+    function exportCSV() {
+      if (filteredData.length === 0) {
+        alert("📭 Nu există date pentru export!\n\n💡 Efectuează câteva operații mai întâi.");
+        return;
+      }
+
+      let csv = 'Nr,Data,Ora,Operatie,Input,Rezultat\n';
+
+      filteredData.forEach((entry, index) => {
+        const date = new Date(entry.timestamp || 0);
+        const dateStr = date.toLocaleDateString('ro-RO');
+        const timeStr = date.toLocaleTimeString('ro-RO');
+        const input = formatInput(entry.input, entry.operation);
+        const result = formatOutput(entry.result, entry.operation);
+
+        csv += `${index + 1},"${dateStr}","${timeStr}","${entry.operation}","${input}","${result}"\n`;
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `math_service_data_${new Date().toISOString().split('T')[0]}.csv`;
+      link.click();
+      URL.revokeObjectURL(link.href);
+
+      showNotification('✅ Date exportate în CSV!');
+    }
+
+    function clearDisplay() {
+      document.getElementById("noDataMessage").textContent = "🧹 Afișarea a fost curățată.\n\n💡 Apasă '🔄 Reîncarcă' pentru a vedea din nou istoricul.";
+      document.getElementById("resultCount").textContent = "0";
+      hideTable();
+    }
+
+    // Funcții pentru statistici și cache management
+    async function showStats() {
+      try {
+        const [cacheStats, dbStats] = await Promise.all([
+          fetch('/api/cache/stats').then(r => r.json()),
+          fetch('/api/database/stats').then(r => r.json())
+        ]);
+
+        const statsMessage = `
+📊 STATISTICI SISTEM
+═══════════════════════════════════════
+
+💾 CACHE:
+• Operații în cache: ${cacheStats.total_cached_operations}
+• Dimensiune cache: ${(cacheStats.cache_size_mb * 1024).toFixed(2)} KB
+• Chei salvate: ${cacheStats.cached_keys.join(', ') || 'Niciuna'}
+
+💽 BAZA DE DATE:
+• Total operații: ${dbStats.total_operations}
+• Combinații unice: ${dbStats.unique_combinations}
+• Duplicate (cache hits): ${dbStats.duplicates}
+
+📈 Pe tipuri de operații:
+${Object.entries(dbStats.by_operation).map(([op, count]) => `• ${op}: ${count} execuții`).join('\n')}
+
+💡 Cache-ul previne ${dbStats.duplicates} salvări duplicate!
+        `;
+
+        alert(statsMessage);
+      } catch (error) {
+        alert(`❌ Eroare la încărcarea statisticilor:\n${error.message}`);
+      }
+    }
+
+    async function clearCache() {
+      if (!confirm('🧹 Ești sigur că vrei să curăți cache-ul?\n\nAceasta va forța recalcularea tuturor operațiilor viitoare.')) {
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/cache/clear', { method: 'POST' });
+        const result = await response.json();
+
+        if (response.ok) {
+          showNotification('🧹 Cache-ul a fost curățat cu succes!');
+          console.log('Cache cleared:', result);
+        } else {
+          throw new Error(result.detail || 'Eroare necunoscută');
+        }
+      } catch (error) {
+        showNotification(`❌ Eroare la curățarea cache-ului: ${error.message}`);
+      }
+    }
+
+    // Auto-încărcare la deschiderea paginii
+    window.onload = loadHistory;
+
+    // Refresh automat la fiecare 30 secunde
+    setInterval(() => {
+      if (document.visibilityState === 'visible' && allData.length > 0) {
+        loadHistory();
+      }
+    }, 30000);
+
+    // Add CSS for notifications
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+      .loading {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>
