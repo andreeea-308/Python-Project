@@ -1,0 +1,163 @@
+2025-08-28 10:23:00,810 - INFO - OpenAI client initialized successfully
+2025-08-28 10:23:00,810 - INFO - Setting up vector store...
+2025-08-28 10:23:00,810 - ERROR - Failed to setup vector store: Vector store failed
+2025-08-28 10:23:00,812 - INFO - OpenAI client initialized successfully
+2025-08-28 10:23:00,812 - INFO - Setting up vector store...
+2025-08-28 10:23:00,812 - INFO - Vector store setup complete
+2025-08-28 10:23:00,812 - INFO - Chatbot initialization complete!
+2025-08-28 10:23:14,031 - INFO - OpenAI client initialized successfully
+2025-08-28 10:23:14,031 - INFO - Setting up vector store...
+2025-08-28 10:23:14,032 - INFO - Vector store setup complete
+2025-08-28 10:23:14,032 - INFO - Chatbot initialization complete!
+2025-08-28 10:23:14,033 - INFO - OpenAI client initialized successfully
+2025-08-28 10:23:14,033 - INFO - Setting up vector store...
+2025-08-28 10:23:14,033 - INFO - Vector store setup complete
+2025-08-28 10:23:14,033 - INFO - Chatbot initialization complete!
+2025-08-28 10:23:14,038 - INFO - OpenAI client initialized successfully
+2025-08-28 10:23:14,038 - INFO - Setting up vector store...
+2025-08-28 10:23:14,038 - INFO - Vector store setup complete
+2025-08-28 10:23:14,038 - INFO - Chatbot initialization complete!
+2025-08-28 10:23:14,038 - WARNING - Inappropriate content detected in user input
+2025-08-28 10:23:27,834 - INFO - OpenAI client initialized successfully
+2025-08-28 10:23:27,834 - INFO - Setting up vector store...
+2025-08-28 10:23:27,835 - INFO - Vector store setup complete
+2025-08-28 10:23:27,835 - INFO - Chatbot initialization complete!
+2025-08-28 10:23:28,077 - INFO - OpenAI client initialized successfully
+2025-08-28 10:23:28,077 - INFO - Setting up vector store...
+2025-08-28 10:23:28,077 - INFO - Vector store setup complete
+2025-08-28 10:23:28,077 - INFO - Chatbot initialization complete!
+2025-08-28 10:23:28,077 - WARNING - Inappropriate content detected in user input
+2025-08-28 10:23:28,078 - INFO - OpenAI client initialized successfully
+2025-08-28 10:23:28,078 - INFO - Setting up vector store...
+2025-08-28 10:23:28,078 - INFO - Vector store setup complete
+2025-08-28 10:23:28,078 - INFO - Chatbot initialization complete!
+2025-08-28 10:23:28,079 - INFO - OpenAI client initialized successfully
+2025-08-28 10:23:28,080 - INFO - Setting up vector store...
+2025-08-28 10:23:28,080 - INFO - Vector store setup complete
+2025-08-28 10:23:28,080 - INFO - Chatbot initialization complete!
+2025-08-28 10:23:28,082 - INFO - OpenAI client initialized successfully
+2025-08-28 10:23:28,082 - INFO - Setting up vector store...
+2025-08-28 10:23:28,082 - INFO - Vector store setup complete
+2025-08-28 10:23:28,082 - INFO - Chatbot initialization complete!
+2025-08-28 10:24:22,456 - INFO - OpenAI client initialized successfully
+2025-08-28 10:24:22,456 - INFO - Setting up vector store...
+2025-08-28 10:24:22,457 - INFO - Vector store setup complete
+2025-08-28 10:24:22,457 - INFO - Chatbot initialization complete!
+2025-08-28 10:26:34,387 - INFO - OpenAI client initialized successfully
+2025-08-28 10:26:34,387 - INFO - Setting up vector store...
+2025-08-28 10:26:34,387 - INFO - Vector store setup complete
+2025-08-28 10:26:34,387 - INFO - Chatbot initialization complete!
+2025-08-28 10:26:43,499 - INFO - OpenAI client initialized successfully
+2025-08-28 10:26:43,499 - INFO - Setting up vector store...
+2025-08-28 10:26:43,499 - INFO - Vector store setup complete
+2025-08-28 10:26:43,499 - INFO - Chatbot initialization complete!
+2025-08-28 10:26:43,500 - INFO - Retrieved summary for book: Red Rising
+2025-08-28 10:26:43,500 - INFO - Retrieved summary for book: Nonexistent Book
+2025-08-28 10:26:43,500 - INFO - OpenAI client initialized successfully
+2025-08-28 10:26:43,500 - INFO - Setting up vector store...
+2025-08-28 10:26:43,501 - INFO - Vector store setup complete
+2025-08-28 10:26:43,501 - INFO - Chatbot initialization complete!
+2025-08-28 10:26:43,502 - INFO - OpenAI client initialized successfully
+2025-08-28 10:26:43,502 - INFO - Setting up vector store...
+2025-08-28 10:26:43,502 - INFO - Vector store setup complete
+2025-08-28 10:26:43,502 - INFO - Chatbot initialization complete!
+2025-08-28 10:26:43,502 - WARNING - Unknown function called: unknown_function
+2025-08-28 10:26:51,927 - INFO - OpenAI client initialized successfully
+2025-08-28 10:26:51,927 - INFO - Setting up vector store...
+2025-08-28 10:26:51,927 - INFO - Vector store setup complete
+2025-08-28 10:26:51,927 - INFO - Chatbot initialization complete!
+2025-08-28 10:26:51,928 - ERROR - Unexpected error on attempt 1: Rate limit exceeded
+2025-08-28 10:26:52,929 - ERROR - Unexpected error on attempt 2: Rate limit exceeded
+2025-08-28 10:26:53,930 - ERROR - Unexpected error on attempt 3: Rate limit exceeded
+2025-08-28 10:26:53,930 - ERROR - Unexpected error in generate_response: All API request attempts failed. Last error: Rate limit exceeded
+2025-08-28 10:26:53,931 - INFO - OpenAI client initialized successfully
+2025-08-28 10:26:53,931 - INFO - Setting up vector store...
+2025-08-28 10:26:53,931 - INFO - Vector store setup complete
+2025-08-28 10:26:53,931 - INFO - Chatbot initialization complete!
+2025-08-28 10:26:53,932 - ERROR - Error searching books: Vector store failed
+2025-08-28 10:26:53,932 - INFO - OpenAI API request successful on attempt 1
+2025-08-28 10:26:53,932 - ERROR - Unexpected error in generate_response: 'Mock' object is not subscriptable
+2025-08-28 10:27:01,824 - INFO - OpenAI client initialized successfully
+2025-08-28 10:27:01,824 - INFO - Setting up vector store...
+2025-08-28 10:27:01,824 - INFO - Vector store setup complete
+2025-08-28 10:27:01,824 - INFO - Chatbot initialization complete!
+2025-08-28 10:27:01,824 - INFO - OpenAI API request successful on attempt 1
+2025-08-28 10:27:10,785 - INFO - OpenAI client initialized successfully
+2025-08-28 10:27:10,785 - INFO - Setting up vector store...
+2025-08-28 10:27:10,785 - INFO - Vector store setup complete
+2025-08-28 10:27:10,786 - INFO - Chatbot initialization complete!
+2025-08-28 10:27:10,787 - INFO - OpenAI client initialized successfully
+2025-08-28 10:27:10,787 - INFO - Setting up vector store...
+2025-08-28 10:27:10,787 - INFO - Vector store setup complete
+2025-08-28 10:27:10,787 - INFO - Chatbot initialization complete!
+2025-08-28 10:27:10,792 - INFO - OpenAI client initialized successfully
+2025-08-28 10:27:10,792 - INFO - Setting up vector store...
+2025-08-28 10:27:10,793 - INFO - Vector store setup complete
+2025-08-28 10:27:10,793 - INFO - Chatbot initialization complete!
+2025-08-28 10:27:10,793 - WARNING - Inappropriate content detected in user input
+2025-08-28 10:27:10,794 - INFO - OpenAI client initialized successfully
+2025-08-28 10:27:10,794 - INFO - Setting up vector store...
+2025-08-28 10:27:10,795 - ERROR - Failed to setup vector store: Vector store failed
+2025-08-28 10:27:10,797 - INFO - OpenAI client initialized successfully
+2025-08-28 10:27:10,797 - INFO - Setting up vector store...
+2025-08-28 10:27:10,797 - INFO - Vector store setup complete
+2025-08-28 10:27:10,797 - INFO - Chatbot initialization complete!
+2025-08-28 10:27:10,798 - INFO - OpenAI client initialized successfully
+2025-08-28 10:27:10,798 - INFO - Setting up vector store...
+2025-08-28 10:27:10,799 - INFO - Vector store setup complete
+2025-08-28 10:27:10,799 - INFO - Chatbot initialization complete!
+2025-08-28 10:27:10,800 - INFO - OpenAI client initialized successfully
+2025-08-28 10:27:10,800 - INFO - Setting up vector store...
+2025-08-28 10:27:10,801 - INFO - Vector store setup complete
+2025-08-28 10:27:10,801 - INFO - Chatbot initialization complete!
+2025-08-28 10:27:10,801 - WARNING - Inappropriate content detected in user input
+2025-08-28 10:27:10,803 - INFO - OpenAI client initialized successfully
+2025-08-28 10:27:10,803 - INFO - Setting up vector store...
+2025-08-28 10:27:10,803 - INFO - Vector store setup complete
+2025-08-28 10:27:10,803 - INFO - Chatbot initialization complete!
+2025-08-28 10:27:10,804 - INFO - OpenAI client initialized successfully
+2025-08-28 10:27:10,804 - INFO - Setting up vector store...
+2025-08-28 10:27:10,805 - INFO - Vector store setup complete
+2025-08-28 10:27:10,805 - INFO - Chatbot initialization complete!
+2025-08-28 10:27:10,806 - INFO - OpenAI client initialized successfully
+2025-08-28 10:27:10,806 - INFO - Setting up vector store...
+2025-08-28 10:27:10,806 - INFO - Vector store setup complete
+2025-08-28 10:27:10,806 - INFO - Chatbot initialization complete!
+2025-08-28 10:27:10,809 - INFO - OpenAI client initialized successfully
+2025-08-28 10:27:10,809 - INFO - Setting up vector store...
+2025-08-28 10:27:10,809 - INFO - Vector store setup complete
+2025-08-28 10:27:10,809 - INFO - Chatbot initialization complete!
+2025-08-28 10:27:10,810 - ERROR - Unexpected error on attempt 1: Rate limit exceeded
+2025-08-28 10:27:11,810 - ERROR - Unexpected error on attempt 2: Rate limit exceeded
+2025-08-28 10:27:12,812 - ERROR - Unexpected error on attempt 3: Rate limit exceeded
+2025-08-28 10:27:12,812 - ERROR - Unexpected error in generate_response: All API request attempts failed. Last error: Rate limit exceeded
+2025-08-28 10:27:12,814 - INFO - OpenAI client initialized successfully
+2025-08-28 10:27:12,814 - INFO - Setting up vector store...
+2025-08-28 10:27:12,814 - INFO - Vector store setup complete
+2025-08-28 10:27:12,814 - INFO - Chatbot initialization complete!
+2025-08-28 10:27:12,815 - ERROR - Error searching books: Vector store failed
+2025-08-28 10:27:12,815 - INFO - OpenAI API request successful on attempt 1
+2025-08-28 10:27:12,815 - ERROR - Unexpected error in generate_response: 'Mock' object is not subscriptable
+2025-08-28 10:27:12,817 - INFO - OpenAI client initialized successfully
+2025-08-28 10:27:12,818 - INFO - Setting up vector store...
+2025-08-28 10:27:12,818 - INFO - Vector store setup complete
+2025-08-28 10:27:12,818 - INFO - Chatbot initialization complete!
+2025-08-28 10:27:12,818 - INFO - Retrieved summary for book: Red Rising
+2025-08-28 10:27:12,819 - INFO - Retrieved summary for book: Nonexistent Book
+2025-08-28 10:27:12,820 - INFO - OpenAI client initialized successfully
+2025-08-28 10:27:12,820 - INFO - Setting up vector store...
+2025-08-28 10:27:12,820 - INFO - Vector store setup complete
+2025-08-28 10:27:12,820 - INFO - Chatbot initialization complete!
+2025-08-28 10:27:12,821 - INFO - OpenAI client initialized successfully
+2025-08-28 10:27:12,821 - INFO - Setting up vector store...
+2025-08-28 10:27:12,821 - INFO - Vector store setup complete
+2025-08-28 10:27:12,821 - INFO - Chatbot initialization complete!
+2025-08-28 10:27:12,821 - WARNING - Unknown function called: unknown_function
+2025-08-28 10:27:12,822 - INFO - OpenAI client initialized successfully
+2025-08-28 10:27:12,823 - INFO - Setting up vector store...
+2025-08-28 10:27:12,823 - INFO - Vector store setup complete
+2025-08-28 10:27:12,823 - INFO - Chatbot initialization complete!
+2025-08-28 10:27:12,823 - INFO - OpenAI API request successful on attempt 1
+2025-08-28 10:29:55,509 - ERROR - Failed to initialize OpenAI client: Client.__init__() got an unexpected keyword argument 'proxies'
+2025-08-28 10:37:52,264 - INFO - HTTP Request: GET https://api.openai.com/v1/models "HTTP/1.1 401 Unauthorized"
+2025-08-28 10:37:52,266 - ERROR - Failed to initialize OpenAI client: Invalid API key - authentication failed

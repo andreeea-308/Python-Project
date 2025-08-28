@@ -1,0 +1,64 @@
+# Book Database Index
+
+Total books: 20
+
+## Business / Entrepreneurship
+- The Lean Startup
+
+## Cognitive Psychology
+- Thinking, Fast and Slow
+
+## Cyberpunk
+- Neuromancer
+
+## Detective Mystery / YA Crime
+- The Naturals
+
+## Fantasy / Romantasy
+- Fourth Wing
+
+## Graphic Novel
+- Watchmen
+
+## Historical Fiction
+- Wolf Hall
+
+## Horror
+- The Haunting of Hill House
+
+## Literary Fiction / Family Saga
+- The Vanishing Half
+
+## Mindfulness / Spirituality
+- The Miracle of Mindfulness
+
+## Narrative Science / Bioethics
+- The Immortal Life of Henrietta Lacks
+
+## Nature Writing
+- Braiding Sweetgrass
+
+## Political Science
+- How Democracies Die
+
+## Psychological Thriller
+- The Housemaid
+
+## Romance / New Adult
+- Addicted to You
+
+## Science Fiction
+- Red Rising
+
+## Self-Help
+- Atomic Habits
+
+## Sociology / Urban Studies
+- Evicted
+
+## Technology / Future Studies
+- Life 3.0
+
+## Young Adult / New Adult
+- Keeping 13
+
